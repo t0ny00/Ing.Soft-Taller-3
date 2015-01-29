@@ -83,7 +83,6 @@ class Test(unittest.TestCase):
         self.assertEqual(beststart, 15, "Fallo en la variable beststart")
         self.assertEqual(bestend, 18, "Fallo en la variable bestend")
 
-    
     def testAceptarReservacion(self):
         empresa = Estacionamiento(10)
         empresa.agregarIntervalo(8, 11)
@@ -112,7 +111,14 @@ class Test(unittest.TestCase):
         result = empresa.AceptarReservacion(10, 11)
         self.assertTrue(result)
     
-
+    def testAgregarIntervaloFueraHorario(self):
+        empresa = Estacionamiento(3)
+        self.assertRaises(FueraDeHorario, empresa.agregarIntervalo,12,22)
+        
+    def testValidacionEnteros(self):
+        empresa = Estacionamiento(3)
+        self.assertRaises(TypeError, empresa.validarEnteros,12.56,22)
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

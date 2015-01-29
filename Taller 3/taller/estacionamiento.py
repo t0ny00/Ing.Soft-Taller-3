@@ -14,6 +14,14 @@ class Estacionamiento:
     def __init__(self,capacidad):
         self.capacidad = capacidad
         self.tabla = []
+    
+    def validarEnteros(self,x,y):
+        if (isinstance(x, int) != False) or ( isinstance(y, int) != False) :  
+            try:
+                print("Intervalos deben ser de tipo entero")
+                raise TypeError()
+            except TypeError:
+                raise
         
     def agregarIntervalo(self,x,y):
         if (x>=6) and (y<=18) :
