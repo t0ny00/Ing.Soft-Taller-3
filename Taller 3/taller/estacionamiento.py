@@ -32,3 +32,28 @@ class Estacionamiento:
             return item[0],item[1]
         
         self.tabla = sorted(self.tabla, key = obtenerClave)
+        
+        
+    def ViabilidadReservacion(self,x,y):
+        
+        
+        
+        tipo = 0
+        offset = 1
+        best = 0
+        cnt = 0
+        beststart = 0
+        bestend = 0
+        for i in range(0,len(self.tabla)):
+            cnt = cnt - self.tabla[i][offset]
+            if (cnt > best) and (self.tabla[i][tipo] != self.tabla[i+1][tipo]) :
+                best = cnt
+                beststart = self.tabla[i][tipo]
+                bestend = self.tabla[i+1][tipo]
+            elif (cnt == best) and ((x in range(self.tabla[i][tipo],self.tabla[i+1][tipo]+1)) or (y in range(self.tabla[i][tipo],self.tabla[i+1][tipo]+1))) :
+                best = cnt
+                beststart = self.tabla[i][tipo]
+                bestend = self.tabla[i+1][tipo]
+            print ("variables: cnt= " + str(cnt) + " best = " + str(best) + " beststart = " + str(beststart)+ " bestend = " + str(bestend))
+        print(best,beststart,bestend)
+        return best,beststart,bestend
