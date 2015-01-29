@@ -50,6 +50,14 @@ class Test(unittest.TestCase):
         self.assertEqual(beststart, 8, "Fallo en la variable beststart")
         self.assertEqual(bestend, 10, "Fallo en la variable bestend")
         
+    def testViabilidadReservacionEstacionamientoVacio(self):
+        empresa = Estacionamiento(10)
+        empresa.ordenar()
+        best,beststart,bestend = empresa.ViabilidadReservacion(15,16)
+        self.assertEqual(best, 0, "Fallo en la variable best")
+        self.assertEqual(beststart, 0, "Fallo en la variable beststart")
+        self.assertEqual(bestend, 0, "Fallo en la variable bestend")
+        
     def testAceptarReservacion(self):
         empresa = Estacionamiento(10)
         empresa.agregarIntervalo(8, 11)
