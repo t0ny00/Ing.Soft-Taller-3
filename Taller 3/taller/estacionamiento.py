@@ -44,7 +44,10 @@ class Estacionamiento:
         
     def ViabilidadReservacion(self,x,y):
         
-        
+        def SegundoSolapamientoEnReservacion(x,y,inicio,fin):
+            if ((x in range(inicio,fin+1)) or (y in range(inicio,fin+1))):
+                return True
+            return False
         
         tipo = 0
         offset = 1
@@ -58,12 +61,10 @@ class Estacionamiento:
                 best = cnt
                 beststart = self.tabla[i][tipo]
                 bestend = self.tabla[i+1][tipo]
-            elif (cnt == best) and ((x in range(self.tabla[i][tipo],self.tabla[i+1][tipo]+1)) or (y in range(self.tabla[i][tipo],self.tabla[i+1][tipo]+1))) :
+            elif (cnt == best) and SegundoSolapamientoEnReservacion(x, y,self.tabla[i][tipo],self.tabla[i+1][tipo]) :
                 best = cnt
                 beststart = self.tabla[i][tipo]
                 bestend = self.tabla[i+1][tipo]
-            print ("variables: cnt= " + str(cnt) + " best = " + str(best) + " beststart = " + str(beststart)+ " bestend = " + str(bestend))
-        print(best,beststart,bestend)
         return best,beststart,bestend
     
     def AceptarReservacion(self,x,y):
