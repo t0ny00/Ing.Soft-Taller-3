@@ -6,6 +6,7 @@ Created on 29/1/2015
 
 import unittest
 from taller.estacionamiento import Estacionamiento
+from taller.estacionamiento import FueraDeHorario
 
 class Test(unittest.TestCase):
 
@@ -68,6 +69,20 @@ class Test(unittest.TestCase):
         self.assertEqual(beststart, 11, "Fallo en la variable beststart")
         self.assertEqual(bestend, 15, "Fallo en la variable bestend")
         
+    def testViabilidadReservacionDosSolapamientos(self):
+        empresa = Estacionamiento(10)
+        empresa.agregarIntervalo(8, 11)
+        empresa.agregarIntervalo(10, 12)
+        empresa.agregarIntervalo(13, 18)
+        empresa.agregarIntervalo(15, 18)
+        empresa.agregarIntervalo(12, 13)
+        empresa.agregarIntervalo(11, 12)
+        empresa.ordenar()
+        best,beststart,bestend = empresa.ViabilidadReservacion(14,16)
+        self.assertEqual(best, 2, "Fallo en la variable best")
+        self.assertEqual(beststart, 15, "Fallo en la variable beststart")
+        self.assertEqual(bestend, 18, "Fallo en la variable bestend")
+
     
     def testAceptarReservacion(self):
         empresa = Estacionamiento(10)
@@ -77,12 +92,27 @@ class Test(unittest.TestCase):
         self.assertTrue(result)
         
     def testRechazarReservacion(self):
+
         empresa = Estacionamiento(2)
         empresa.AceptarReservacion(8, 11)
         empresa.AceptarReservacion(6, 10)
         result = empresa.AceptarReservacion(9, 10)
         self.assertFalse(result)
-        
+
+    def testAceptarReservacionInicioYFinContinuos(self):
+        empresa = Estacionamiento(2)
+        empresa.agregarIntervalo(8, 10)
+        empresa.agregarIntervalo(10, 15)
+        result = empresa.AceptarReservacion(10, 11)
+        self.assertTrue(result)
+    
+    def testAceptarReservacionSaleUnoEntraUno(self):
+        empresa = Estacionamiento(1)
+        empresa.agregarIntervalo(8, 10)
+        result = empresa.AceptarReservacion(10, 11)
+        self.assertTrue(result)
+    
+
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
