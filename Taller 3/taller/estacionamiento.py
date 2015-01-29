@@ -57,3 +57,17 @@ class Estacionamiento:
             print ("variables: cnt= " + str(cnt) + " best = " + str(best) + " beststart = " + str(beststart)+ " bestend = " + str(bestend))
         print(best,beststart,bestend)
         return best,beststart,bestend
+    
+    def AceptarReservacion(self,x,y):
+        self.ordenar()
+        best,beststart,bestend = self.ViabilidadReservacion(x, y)
+        if best < self.capacidad : 
+            self.agregarIntervalo(x, y)
+            return True
+        elif best == self.capacidad :
+            if ((x in range(beststart,bestend) or (y in range(beststart,bestend+1)))) :
+                return False
+            else :
+                self.agregarIntervalo(x, y)
+                return True
+        return False
