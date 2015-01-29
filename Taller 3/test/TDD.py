@@ -14,7 +14,10 @@ class Test(unittest.TestCase):
         self.assertEqual(empresa.capacidad, 3)
         self.assertEqual(empresa.tabla,[])
         
-    
+    def testAgregarIntervalo(self):
+        empresa = Estacionamiento(3)
+        empresa.agregarIntervalo(8, 13)
+        self.assertEqual(empresa.tabla,[(8,-1),(13,1)])
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
