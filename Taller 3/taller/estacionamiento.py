@@ -25,3 +25,10 @@ class Estacionamiento:
                 raise FueraDeHorario()
             except FueraDeHorario:
                 raise
+            
+    def ordenar(self):
+        
+        def obtenerClave(item):
+            return item[0],item[1]
+        
+        self.tabla = sorted(self.tabla, key = obtenerClave)
