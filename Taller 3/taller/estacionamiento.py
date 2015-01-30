@@ -44,7 +44,9 @@ class Estacionamiento:
         
     def ViabilidadReservacion(self,x,y):
         
-        def SegundoSolapamientoEnReservacion(x,y,inicio,fin):
+        # Devuelve True si un solapamiento se encuentra dentro del rango de una reservacion
+        # False en caso contrario
+        def SolapamientoEnRangoReserva(x,y,inicio,fin):
             if ((x in range(inicio,fin+1)) or (y in range(inicio,fin+1))):
                 return True
             return False
@@ -61,7 +63,7 @@ class Estacionamiento:
                 best = cnt
                 beststart = self.tabla[i][tipo]
                 bestend = self.tabla[i+1][tipo]
-            elif (cnt == best) and SegundoSolapamientoEnReservacion(x, y,self.tabla[i][tipo],self.tabla[i+1][tipo]) :
+            elif (cnt == best) and SolapamientoEnRangoReserva(x, y,self.tabla[i][tipo],self.tabla[i+1][tipo]) :
                 best = cnt
                 beststart = self.tabla[i][tipo]
                 bestend = self.tabla[i+1][tipo]
@@ -74,6 +76,7 @@ class Estacionamiento:
             self.agregarIntervalo(x, y)
             return True
         elif best == self.capacidad :
+            # Si el rango del solapamiento intersecta el de la reservacion, no se acepta esta ultima
             if ((x in range(beststart,bestend) or (y in range(beststart,bestend+1)))) :
                 return False
             else :
